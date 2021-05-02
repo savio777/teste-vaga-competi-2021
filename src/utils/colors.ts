@@ -8,6 +8,7 @@ const colors = {
   backgroundButton: "#7E7394",
   borderButton: "#100B16",
   border: "#707070",
+  backgroundCardPokemonSprite: "#B4ADBE",
 };
 
 export default colors;

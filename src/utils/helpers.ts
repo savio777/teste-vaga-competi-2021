@@ -14,3 +14,22 @@ export function getLinkSprite(urlPokemon: string): string {
 
   return urlSpritePokemon;
 }
+
+interface IPaginationDataDTO {
+  data: Array<any>;
+  numberItens?: number;
+  pageNumber?: number;
+}
+
+export function paginationData({
+  data,
+  numberItens = 6,
+  pageNumber = 1,
+}: IPaginationDataDTO): Array<any> {
+  const indexInit = (pageNumber - 1) * numberItens;
+  const indexLimit = pageNumber * numberItens;
+
+  const newArray = data.slice(indexInit, indexLimit);
+
+  return newArray;
+}

@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/api";
-import { capitalizeFirstLetter, getLinkSprite } from "../../utils/helpers";
+import {
+  capitalizeFirstLetter,
+  getLinkSprite,
+  paginationData,
+} from "../../utils/helpers";
 
-import { Container, ContainerInputFilter, ContainerPokemons } from "./styles";
+import {
+  Container,
+  ContainerInputFilter,
+  ContainerPokemons,
+  PokemonCard,
+} from "./styles";
 
 interface ItemPokemonTypes {
   name: string;
@@ -21,12 +30,19 @@ const CardPokedex: React.FC = () => {
   const [listPokemonsForTypes, setListPokemonsForTypes] = useState<
     ItemPokemon[]
   >([]);
+  const [
+    listPokemonsForTypesRender,
+    setListPokemonsForTypesPaginated,
+  ] = useState<ItemPokemon[]>([]);
 
   async function getPokemonsForType(type: string) {
     const response = await api.get(`/type/${type}`);
 
     if (response.status === 200) {
       setListPokemonsForTypes([...response.data?.pokemon]);
+      setListPokemonsForTypesPaginated(
+        paginationData({ data: response.data?.pokemon })
+      );
     }
   }
 
@@ -56,14 +72,14 @@ const CardPokedex: React.FC = () => {
         </select>
       </ContainerInputFilter>
       <ContainerPokemons>
-        {listPokemonsForTypes.map((pokemonsForType) => (
-          <>
-            <p>teste {pokemonsForType.pokemon?.name}</p>
+        {listPokemonsForTypesRender.map((pokemonsForType) => (
+          <PokemonCard>
             <img
               src={getLinkSprite(pokemonsForType.pokemon?.url)}
               alt={pokemonsForType.pokemon?.name}
             />
-          </>
+            <p>{pokemonsForType.pokemon?.name}</p>
+          </PokemonCard>
         ))}
       </ContainerPokemons>
     </Container>
