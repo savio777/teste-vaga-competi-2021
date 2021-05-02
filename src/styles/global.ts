@@ -24,9 +24,4 @@ export default createGlobalStyle`
     button{
       cursor: pointer;
     }
-    select{
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
 `;

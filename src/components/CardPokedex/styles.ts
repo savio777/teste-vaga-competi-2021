@@ -26,10 +26,11 @@ export const ContainerInputFilter = styled.div`
     width: 100%;
     max-height: 45px;
     height: 100%;
-    //padding: 11px 0 5px 6px 20px;
+    //padding: 11px 18 5px 6px 20px;
     padding-top: 11px;
     padding-left: 20px;
     padding-bottom: 5px;
+
     border: 1px solid ${colors.border};
     border-radius: 3px;
 
@@ -44,6 +45,7 @@ export const ContainerPokemons = styled.div`
   height: 100%;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 
   padding: 81px 107px 70px 107px;
 `;
