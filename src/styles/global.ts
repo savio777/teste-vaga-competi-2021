@@ -15,7 +15,7 @@ export default createGlobalStyle`
       color: #FFF;
       -webkit-font-smoothing: antialiased;
     }
-    body, input, button{
+    body, input, button, select{
         font: 16px 'Poppins', sans-serif;
     }
     h1, h2, h3, h4, h5, h6, strong{
@@ -23,5 +23,10 @@ export default createGlobalStyle`
     }
     button{
       cursor: pointer;
+    }
+    select{
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
 `;

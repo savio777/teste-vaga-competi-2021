@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../utils/colors";
 
 import color from "../../utils/colors";
 
@@ -30,7 +31,7 @@ export const InputSearch = styled.input`
 export const ButtonLogin = styled.button`
   background: ${color.backgroundButton};
   max-height: 113px;
-  border: 2px solid #000;
+  border: 2px solid ${colors.borderButton};
   border-radius: 7px;
   color: #fff;
   padding: 7px 31px 7px 31px;

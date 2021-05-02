@@ -2,6 +2,7 @@ import React from "react";
 
 import Footer from "../../components/footer";
 import Header from "../../components/header";
+import CardPokedex from "../../components/CardPokedex";
 
 import { Container } from "./styles";
 
@@ -10,7 +11,7 @@ const Home: React.FC = () => {
     <>
       <Header />
       <Container>
-        <h1>teste</h1>
+        <CardPokedex />
       </Container>
       <Footer />
     </>
