@@ -37,6 +37,5 @@ export function paginationData({
 
   const newArray = data.slice(indexInit, indexLimit);
 
-  console.log(newArray);
   return newArray;
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import api from "../../services/api";
 
 import {
   capitalizeFirstLetter,
@@ -7,6 +6,7 @@ import {
   paginationData,
 } from "../../utils/helpers";
 import CardPokemon from "../../components/CardPokemon";
+import api from "../../services/api";
 
 import {
   Container,
