@@ -10,3 +10,14 @@ export const Container = styled.div`
   padding: 0 90px 72px 90px;
   align-items: center;
 `;
+
+export const PokemonRandomContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 50px;
+  width: 100%;
+  max-height: 250px;
+`;

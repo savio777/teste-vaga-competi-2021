@@ -1,18 +1,24 @@
 export function capitalizeFirstLetter(word: string): string {
-  const capitalizedFirstLetter = word[0].toUpperCase();
-  const restWord = word.slice(1);
+  if (word) {
+    const capitalizedFirstLetter = word[0].toUpperCase();
+    const restWord = word.slice(1);
 
-  return capitalizedFirstLetter + restWord;
+    return capitalizedFirstLetter + restWord;
+  }
+  return word;
 }
 
 export function getLinkSprite(urlPokemon: string): string {
-  const idPokemon = urlPokemon
-    .replace("https://pokeapi.co/api/v2/pokemon/", "")
-    .replace("/", "");
+  if (urlPokemon) {
+    const idPokemon = urlPokemon
+      .replace("https://pokeapi.co/api/v2/pokemon/", "")
+      .replace("/", "");
 
-  const urlSpritePokemon = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idPokemon}.png`;
+    const urlSpritePokemon = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idPokemon}.png`;
 
-  return urlSpritePokemon;
+    return urlSpritePokemon;
+  }
+  return urlPokemon;
 }
 
 interface IPaginationDataDTO {
@@ -31,5 +37,6 @@ export function paginationData({
 
   const newArray = data.slice(indexInit, indexLimit);
 
+  console.log(newArray);
   return newArray;
 }

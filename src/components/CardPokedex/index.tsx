@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import api from "../../services/api";
+
 import {
   capitalizeFirstLetter,
   getLinkSprite,
   paginationData,
 } from "../../utils/helpers";
+import CardPokemon from "../../components/CardPokemon";
 
 import {
   Container,
   ContainerInputFilter,
   ContainerPokemons,
-  PokemonCard,
+  TextError,
 } from "./styles";
 
 interface ItemPokemonTypes {
@@ -23,41 +25,57 @@ interface ItemPokemon {
   slot: number;
 }
 
-const CardPokedex: React.FC = () => {
+interface CardPokedexProps {
+  setLoading(value: boolean): void;
+}
+
+const CardPokedex: React.FC<CardPokedexProps> = ({ setLoading }) => {
   const [listTypesPokemons, setListTypesPokemons] = useState<
     ItemPokemonTypes[]
   >([]);
   const [listPokemonsForTypes, setListPokemonsForTypes] = useState<
-    ItemPokemon[]
+    ItemPokemonTypes[]
   >([]);
-  const [
-    listPokemonsForTypesRender,
-    setListPokemonsForTypesPaginated,
-  ] = useState<ItemPokemon[]>([]);
 
-  async function getPokemonsForType(type: string) {
-    const response = await api.get(`/type/${type}`);
+  const getPokemonsForType = useCallback(
+    async (type: string) => {
+      setLoading(true);
 
-    if (response.status === 200) {
-      setListPokemonsForTypes([...response.data?.pokemon]);
-      setListPokemonsForTypesPaginated(
-        paginationData({ data: response.data?.pokemon })
-      );
-    }
-  }
+      try {
+        const response = await api.get(`/type/${type}`);
+
+        if (response.status === 200) {
+          setListPokemonsForTypes([...response.data?.pokemon]);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    },
+    [setLoading]
+  );
 
   useEffect(() => {
     async function initialFunction() {
-      const response = await api.get("/type");
+      setLoading(true);
 
-      if (response.status === 200) {
-        setListTypesPokemons([...response.data?.results]);
-        getPokemonsForType(response.data?.results[0]?.name);
+      try {
+        const response = await api.get("/type");
+
+        if (response.status === 200) {
+          setListTypesPokemons([...response.data?.results]);
+          getPokemonsForType(response.data?.results[0]?.name);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
       }
     }
 
     initialFunction();
-  }, []);
+  }, [setLoading, getPokemonsForType]);
 
   return (
     <Container>
@@ -70,17 +88,19 @@ const CardPokedex: React.FC = () => {
             </option>
           ))}
         </select>
+        {paginationData({ data: listPokemonsForTypes }).length === 0 && (
+          <TextError>Nenhum Pokemón para ser mostrado</TextError>
+        )}
       </ContainerInputFilter>
       <ContainerPokemons>
-        {listPokemonsForTypesRender.map((pokemonsForType) => (
-          <PokemonCard>
-            <img
-              src={getLinkSprite(pokemonsForType.pokemon?.url)}
-              alt={pokemonsForType.pokemon?.name}
+        {paginationData({ data: listPokemonsForTypes }).map(
+          (pokemonsForType) => (
+            <CardPokemon
+              namePokemon={capitalizeFirstLetter(pokemonsForType.pokemon?.name)}
+              urlImage={getLinkSprite(pokemonsForType.pokemon?.url)}
             />
-            <p>{pokemonsForType.pokemon?.name}</p>
-          </PokemonCard>
-        ))}
+          )
+        )}
       </ContainerPokemons>
     </Container>
   );
